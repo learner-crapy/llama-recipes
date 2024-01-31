@@ -246,7 +246,22 @@ def train(model, train_dataloader,eval_dataloader, tokenizer, optimizer, lr_sche
                 print(f"Epoch {epoch+1}: train_perplexity={train_perplexity:.4f}, train_epoch_loss={train_epoch_loss:.4f}, epoch time {epoch_end_time}s")
         else:
             print(f"Epoch {epoch+1}: train_perplexity={train_perplexity:.4f}, train_epoch_loss={train_epoch_loss:.4f}, epoch time {epoch_end_time}s")
-        
+        ####### self add start
+        try:
+            epoch_save_dir = f"{train_config.output_dir}-epoch-{epoch + 1}"
+            if not os.path.exists(epoch_save_dir):
+                os.makedirs(epoch_save_dir)
+
+            if train_config.enable_fsdp:
+                if rank == 0:
+                    model.save_pretrained(epoch_save_dir)
+            else:
+                model.save_pretrained(epoch_save_dir)
+        except Exception as e:
+            with open("./logs/errors.txt", 'a') as f:
+                f.write(str(e))
+
+        ######  self add end
         # Saving the results every epoch to plot later
         if train_config.save_metrics:
             save_to_json(metrics_filename, train_step_loss, train_loss, train_step_perplexity, train_prep, val_step_loss, val_loss, val_step_perplexity, val_prep)
