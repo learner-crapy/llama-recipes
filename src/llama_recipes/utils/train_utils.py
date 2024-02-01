@@ -515,5 +515,5 @@ def save_to_json(output_filename, train_step_loss, train_epoch_loss, train_step_
         "val_step_perplexity": val_step_ppl,
         "val_epoch_perplexity": val_epoch_ppl
     }
-    with open(output_filename, "w") as f:
+    with open(output_filename, "w+") as f:
         json.dump(metrics_data, f)
