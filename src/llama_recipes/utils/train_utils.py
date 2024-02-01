@@ -499,7 +499,7 @@ def save_train_params(train_config, fsdp_config, rank):
         print(f"Error: {file_name} is a directory, not a file.")
     else:
         # Write the YAML string to the file
-        with open(file_name, 'w') as f:
+        with open(file_name, 'w+') as f:
             f.write(config_yaml)
         if rank==0:
             print(f"training params are saved in {file_name}")
