@@ -8,7 +8,7 @@ import datasets
 
 
 def get_preprocessed_medmcqa(dataset_config, tokenizer, split):
-    dataset = datasets.load_dataset("daze-unlv/medmcqa", split=split)
+    dataset = datasets.load_dataset("medmcqa", split=split)
     # This is a real-world medical entrance exam question, please give the true answer based on the question and options:
     prompt = (
         f"This is a real-world medical entrance exam question, please give the true answer based on the question and options: \n{{question}}\n{{opa}}, {{opb}}, {{opc}}, {{opd}}\nanswer:\n"
